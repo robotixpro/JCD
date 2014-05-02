@@ -13,6 +13,7 @@ public class Currencies extends JavaPlugin implements Listener {
 	public void onEnable() {
 		getServer().getPluginManager().registerEvents(this, this);
 		getCommand("jcd").setExecutor(new JCD_CommandExecutor());
+		SLAPI.loadBalences();
 	}
 	
 	@EventHandler 
@@ -37,5 +38,8 @@ public class Currencies extends JavaPlugin implements Listener {
 		getConfig().set(p.getName() + ".Cocoa Bean", getConfig().getInt(p.getName() + ".Cocoa Bean" , 0) - B);
 		saveConfig();
 		p.sendMessage(B + " Cocoa Beans taken");
+	}
+	public void onDisable() {
+		SLAPI.saveBalences();
 	}
 }

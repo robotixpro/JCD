@@ -4,6 +4,12 @@ import java.util.HashMap;
 
 public class JCD_Manager {
 
+	private static Main plugin;
+	
+	public JCD_Manager(Main instance)
+	{
+		plugin = instance;
+	}
 	public static HashMap<String, Double> bal = new HashMap<>();
 	
 	public static void setBalence(String player, double amount)
@@ -24,6 +30,10 @@ public class JCD_Manager {
 	public static HashMap<String, Double> getBalanceMap()
 	{
 		return bal;
+	}
+	public static Main getPlugin()
+	{
+		return plugin;
 	}
 	
 	
