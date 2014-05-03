@@ -1,7 +1,5 @@
 package me.starmech.JCD;
 
-import me.starmech.JCD.JCD_Manager;
-
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,8 +10,9 @@ public class Currencies extends JavaPlugin implements Listener {
 
 	public void onEnable() {
 		getServer().getPluginManager().registerEvents(this, this);
-		getCommand("jcd").setExecutor(new JCD_CommandExecutor());
-		SLAPI.loadBalences();
+		getCommand("jcd").setExecutor(new JCD_CommandExecutor(this));
+		new JCD_CommandExecutor(this);
+		getConfig();
 	}
 	
 	@EventHandler 
@@ -21,25 +20,39 @@ public class Currencies extends JavaPlugin implements Listener {
 		Player p = e.getPlayer();
 
 		if(!getConfig().contains(p.getName())){
-			getConfig().set(p.getName() + ".Cocoa Bean", 0);
+			getConfig().set(p.getName() + ".CocoaBean", 0);
 			
-		if(JCD_Manager.hasAccount(e.getPlayer().getName())) return;
-			JCD_Manager.setBalence(e.getPlayer().getName(), 0D);
 		}
 	
 	}
 	
 	public void giveCocoaBean(Player p, int B){
-		getConfig().set(p.getName() + ".Cocoa Bean", getConfig().getInt(p.getName() + ".Cocoa Bean" , 0) + B);
+		getConfig().set(p.getName() + ".CocoaBean", getConfig().getInt(p.getName() + ".CocoaBean" , 0) + B);
 		saveConfig();
-		p.sendMessage(B + " Cocoa Beans given");
+		p.sendMessage(B + " CocoaBeans given");
 	}
 	public void takeCocoaBean(Player p, int B){
-		getConfig().set(p.getName() + ".Cocoa Bean", getConfig().getInt(p.getName() + ".Cocoa Bean" , 0) - B);
+		getConfig().set(p.getName() + ".CocoaBean", getConfig().getInt(p.getName() + ".CocoaBean" , 0) - B);
 		saveConfig();
-		p.sendMessage(B + " Cocoa Beans taken");
+		p.sendMessage(B + " CocoaBeans taken");
 	}
+	
+	public void setBalance(String player, double amount)
+	{
+		getConfig().set(player, amount);
+	}
+	
+	public double getBalance(String player)
+	{
+		return getConfig().getDouble(player);
+	}
+	
+	public boolean hasAccount(String player)
+	{
+		return getConfig().contains(player);
+	}
+	
 	public void onDisable() {
-		SLAPI.saveBalences();
+		saveConfig();
 	}
 }

@@ -14,15 +14,15 @@ public class JCD_CommandExecutor implements CommandExecutor {
 		if(args.length != 3)
 		{
 			cs.sendMessage(ChatColor.RED +"Missing Arguments");
-			cs.sendMessage(ChatColor.GREEN + "Usage: /jcd <add,remove,set> <Player> <Amount>");
+			cs.sendMessage(ChatColor.GREEN + "Usage: /jcd <add/remove/set> <Player> <Amount>");
 			return true;
 		}
 			
 		if(args[0].equalsIgnoreCase("add"))
 		{
-			if(!JCD_Manager.hasAccount(args[1]))
+			if(!plugin.hasAccount(args[1]))
 			{
-				cs.sendMessage("Player does not have an account with this server!");
+				cs.sendMessage(ChatColor.RED + "Player does not have an account with this server!");
 				return true;
 			}
 			double amount = 0;
@@ -35,12 +35,13 @@ public class JCD_CommandExecutor implements CommandExecutor {
 				return true;
 			}
 						
-			JCD_Manager.setBalence(args[1], JCD_Manager.getBalence(args[1]) + amount);	
+			plugin.setBalance(args[1], plugin.getBalance(args[1]) + amount);
+			plugin.saveConfig();
 		}else if(args[0].equalsIgnoreCase("remove"))
 		{
-			if(!JCD_Manager.hasAccount(args[1]))
+			if(!plugin.hasAccount(args[1]))
 			{
-				cs.sendMessage("Player does not have an account with this server!");
+				cs.sendMessage(ChatColor.RED + "Player does not have an account with this server!");
 				return true;
 			}
 			double amount = 0;
@@ -53,13 +54,14 @@ public class JCD_CommandExecutor implements CommandExecutor {
 				return true;
 			}
 						
-			JCD_Manager.setBalence(args[1], JCD_Manager.getBalence(args[1]) - amount);
+			plugin.setBalance(args[1], plugin.getBalance(args[1]) - amount);
+			plugin.saveConfig();
 			
 		}else if(args[0].equalsIgnoreCase("set"))
 		{
-			if(!JCD_Manager.hasAccount(args[1]))
+			if(!plugin.hasAccount(args[1]))
 			{
-				cs.sendMessage("Player does not have an account with this server!");
+				cs.sendMessage(ChatColor.RED + "Player does not have an account with this server!");
 				return true;
 			}
 			double amount = 0;
@@ -72,7 +74,8 @@ public class JCD_CommandExecutor implements CommandExecutor {
 				return true;
 			}
 						
-			JCD_Manager.setBalence(args[1], amount);
+			plugin.setBalance(args[1], amount);
+			plugin.saveConfig();
 			
 			
 		}else
@@ -81,6 +84,12 @@ public class JCD_CommandExecutor implements CommandExecutor {
 		}
 		
 		return true;
+	}
+	private Currencies plugin;
+	
+	public JCD_CommandExecutor(Currencies plugin)
+	{
+	this.plugin = plugin;
 	}
 }
 

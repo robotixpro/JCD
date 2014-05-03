@@ -1,4 +1,16 @@
 name: JCD
 author: Star_Mech
-version: D0.1
-main: me.starmech.JCD.Main
+authors: [KoolKrafter]
+version: 0.1
+main: me.starmech.JCD.Currencies
+
+commands:
+  jcd:
+    description: A command used to add/set the CocoaBean Currency.
+    aliases: [jcdonator, jcdon]
+    usage: Syntax error! Try /jcd [arg1] [player] [amount].
+
+permissions:
+  jcd.use:
+    description: Allows the use of /jcd add/remove/set.
+    default: op
